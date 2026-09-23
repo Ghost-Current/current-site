@@ -12,7 +12,7 @@
 
   <style>
     /* ==========================================================================
-       1. CSS VARIABLES & RESETS (Color Palette: Spicy Orange, Dark Charcoal, White)
+       1. CSS VARIABLES & RESETS
        ========================================================================== */
     :root {
       --primary: #E65100;        /* Spicy Lagos Orange */
@@ -60,7 +60,7 @@
     }
 
     /* ==========================================================================
-       2. HEADER & NAVIGATION (With Mobile Hamburger Menu)
+       2. HEADER & NAVIGATION
        ========================================================================== */
     header {
       position: fixed;
@@ -401,7 +401,7 @@
     }
 
     /* ==========================================================================
-       8. RESPONSIVE DESIGN (MEDIA QUERIES)
+       8. RESPONSIVE DESIGN
        ========================================================================== */
     @media (max-width: 768px) {
       .hamburger {
@@ -594,10 +594,10 @@
         <label for="selectedMeal">Select Meal</label>
         <select id="selectedMeal">
           <option value="">-- Choose a dish --</option>
-          <option value="jollof">Smokey Party Jollof (₦3,500)</option>
-          <option value="suya">Beef Suya Platter (₦4,000)</option>
-          <option value="ewa">Ewa Aganyin & Bread (₦2,800)</option>
-          <option value="ofada">Ofada Rice Special (₦4,500)</option>
+          <option value="Smokey Party Jollof">Smokey Party Jollof (₦3,500)</option>
+          <option value="Beef Suya Platter">Beef Suya Platter (₦4,000)</option>
+          <option value="Ewa Aganyin & Bread">Ewa Aganyin & Bread (₦2,800)</option>
+          <option value="Ofada Rice Special">Ofada Rice Special (₦4,500)</option>
         </select>
         <div class="error-text" id="mealError">Please select a meal.</div>
       </div>
@@ -643,8 +643,16 @@
     </div>
   </footer>
 
-  <!-- 7. INTERACTIVE JAVASCRIPT -->
+  <!-- 7. SUPABASE SDK & INTERACTIVE SCRIPT -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-javascript@2"></script>
+
   <script>
+    // Initialize Supabase Client
+    const SUPABASE_URL = 'https://ywoybblswcvmwvhhxpkd.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3b3liYmxzd2N2bXd2aGh4cGtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNzcxMTAsImV4cCI6MjEwNTc1MzExMH0.AGKuEjvGueZiN-Kw9pX-UxgI3xYJUsv5kX-q8Y16ZAw';
+    
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
     // Mobile Navigation Toggle
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const navLinks = document.getElementById('navLinks');
@@ -657,82 +665,7 @@
       navLinks.classList.remove('active');
     }
 
-    // Contact/Order Form Validation
-    function handleFormSubmit(e) {
-      e.preventDefault();
-
-      const name = document.getElementById('fullName').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const meal = document.getElementById('selectedMeal').value;
-      const address = document.getElementById('address').value.trim();
-
-      let isValid = true;
-
-      // Name Validation
-      if (name === '') {
-        document.getElementById('nameError').style.display = 'block';
-        isValid = false;
-      } else {
-        document.getElementById('nameError').style.display = 'none';
-      }
-
-      // Phone Validation
-      if (phone.length < 10) {
-        document.getElementById('phoneError').style.display = 'block';
-        isValid = false;
-      } else {
-        document.getElementById('phoneError').style.display = 'none';
-      }
-
-      // Meal Validation
-      if (meal === '') {
-        document.getElementById('mealError').style.display = 'block';
-        isValid = false;
-      } else {
-        document.getElementById('mealError').style.display = 'none';
-      }
-
-      // Address Validation
-      if (address === '') {
-        document.getElementById('addressError').style.display = 'block';
-        isValid = false;
-      } else {
-        document.getElementById('addressError').style.display = 'none';
-      }
-
-      // If valid, show success message and reset form
-      if (isValid) {
-        document.getElementById('formSuccess').style.display = 'block';
-        document.getElementById('orderForm').reset();
-
-        setTimeout(() => {
-          document.getElementById('formSuccess').style.display = 'none';
-        }, 5000);
-      }
-    }
-  <!-- Supabase CDN Client Library -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-javascript@2"></script>
-
-  <script>
-    // 1. Initialize Supabase Client with your credentials
-    const SUPABASE_URL = 'https://ywoybblswcvmwvhhxpkd.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3b3liYmxzd2N2bXd2aGh4cGtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNzcxMTAsImV4cCI6MjEwNTc1MzExMH0.AGKuEjvGueZiN-Kw9pX-UxgI3xYJUsv5kX-q8Y16ZAw';
-    
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    // 2. Mobile Navigation Toggle
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const navLinks = document.getElementById('navLinks');
-
-    hamburgerBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
-
-    function closeNav() {
-      navLinks.classList.remove('active');
-    }
-
-    // 3. Contact/Order Form Submission to Supabase Database
+    // Contact/Order Form Submission to Supabase
     async function handleFormSubmit(e) {
       e.preventDefault();
 
@@ -743,7 +676,6 @@
 
       let isValid = true;
 
-      // Validation Checks
       if (name === '') {
         document.getElementById('nameError').style.display = 'block';
         isValid = false;
@@ -772,7 +704,6 @@
         document.getElementById('addressError').style.display = 'none';
       }
 
-      // If validation passes, insert data into Supabase
       if (isValid) {
         const submitBtn = e.target.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
@@ -792,7 +723,7 @@
 
           if (error) {
             console.error('Supabase Error:', error);
-            alert('Failed to place order. Please check your Supabase RLS policy.');
+            alert('Failed to place order: ' + error.message);
           } else {
             document.getElementById('formSuccess').style.display = 'block';
             document.getElementById('orderForm').reset();
