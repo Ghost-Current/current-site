@@ -710,6 +710,105 @@
         }, 5000);
       }
     }
+  <!-- Supabase CDN Client Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-javascript@2"></script>
+
+  <script>
+    // 1. Initialize Supabase Client with your credentials
+    const SUPABASE_URL = 'https://ywoybblswcvmwvhhxpkd.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3b3liYmxzd2N2bXd2aGh4cGtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNzcxMTAsImV4cCI6MjEwNTc1MzExMH0.AGKuEjvGueZiN-Kw9pX-UxgI3xYJUsv5kX-q8Y16ZAw';
+    
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // 2. Mobile Navigation Toggle
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburgerBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    function closeNav() {
+      navLinks.classList.remove('active');
+    }
+
+    // 3. Contact/Order Form Submission to Supabase Database
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('fullName').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const meal = document.getElementById('selectedMeal').value;
+      const address = document.getElementById('address').value.trim();
+
+      let isValid = true;
+
+      // Validation Checks
+      if (name === '') {
+        document.getElementById('nameError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('nameError').style.display = 'none';
+      }
+
+      if (phone.length < 10) {
+        document.getElementById('phoneError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('phoneError').style.display = 'none';
+      }
+
+      if (meal === '') {
+        document.getElementById('mealError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('mealError').style.display = 'none';
+      }
+
+      if (address === '') {
+        document.getElementById('addressError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('addressError').style.display = 'none';
+      }
+
+      // If validation passes, insert data into Supabase
+      if (isValid) {
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Submitting Order...';
+
+        try {
+          const { data, error } = await supabaseClient
+            .from('orders')
+            .insert([
+              { 
+                full_name: name, 
+                phone: phone, 
+                selected_meal: meal, 
+                address: address 
+              }
+            ]);
+
+          if (error) {
+            console.error('Supabase Error:', error);
+            alert('Failed to place order. Please check your Supabase RLS policy.');
+          } else {
+            document.getElementById('formSuccess').style.display = 'block';
+            document.getElementById('orderForm').reset();
+
+            setTimeout(() => {
+              document.getElementById('formSuccess').style.display = 'none';
+            }, 5000);
+          }
+        } catch (err) {
+          console.error('Unexpected error:', err);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Submit Order';
+        }
+      }
+    }
   </script>
 </body>
 </html>
