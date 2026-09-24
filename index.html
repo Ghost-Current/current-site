@@ -594,10 +594,10 @@
         <label for="selectedMeal">Select Meal</label>
         <select id="selectedMeal">
           <option value="">-- Choose a dish --</option>
-          <option value="jollof">Smokey Party Jollof (₦3,500)</option>
-          <option value="suya">Beef Suya Platter (₦4,000)</option>
-          <option value="ewa">Ewa Aganyin & Bread (₦2,800)</option>
-          <option value="ofada">Ofada Rice Special (₦4,500)</option>
+          <option value="Smokey Party Jollof (₦3,500)">Smokey Party Jollof (₦3,500)</option>
+          <option value="Beef Suya Platter (₦4,000)">Beef Suya Platter (₦4,000)</option>
+          <option value="Ewa Aganyin & Bread (₦2,800)">Ewa Aganyin & Bread (₦2,800)</option>
+          <option value="Ofada Rice Special (₦4,500)">Ofada Rice Special (₦4,500)</option>
         </select>
         <div class="error-text" id="mealError">Please select a meal.</div>
       </div>
@@ -712,12 +712,13 @@
         submitBtn.innerText = "Sending Order...";
 
         try {
-          // Write document into "orders" collection
+          // Write document into "orders" collection with "pending" status
           await addDoc(collection(db, "orders"), {
             fullName: name,
             phone: phone,
             meal: meal,
             address: address,
+            status: "pending",
             createdAt: serverTimestamp()
           });
 
