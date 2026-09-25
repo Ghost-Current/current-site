@@ -24,8 +24,7 @@
     body { background-color: var(--dark); color: var(--text-main); padding: 1.5rem 1rem; }
 
     .track-container { max-width: 500px; margin: 0 auto; }
-
-    header { text-align: center; margin-bottom: 2rem; }
+    header { text-align: center; margin-bottom: 1.5rem; }
     .logo { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
 
     .card {
@@ -36,12 +35,10 @@
       margin-bottom: 1.5rem;
     }
 
-    /* Live Progress Tracker UI */
     .tracker-steps {
       display: flex;
       flex-direction: column;
       gap: 1.2rem;
-      position: relative;
       margin: 1.5rem 0;
     }
 
@@ -56,57 +53,178 @@
     .step-item.active { opacity: 1; }
 
     .step-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: #222;
-      border: 2px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 1.1rem;
+      width: 40px; height: 40px; border-radius: 50%;
+      background-color: #222; border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1.1rem;
     }
 
-    .step-item.active .step-icon {
-      background-color: var(--primary);
-      border-color: var(--primary);
-      color: #fff;
-    }
+    .step-item.active .step-icon { background-color: var(--primary); border-color: var(--primary); color: #fff; }
+    .step-item.completed .step-icon { background-color: var(--secondary); border-color: var(--secondary); color: #fff; }
 
-    .step-item.completed .step-icon {
-      background-color: var(--secondary);
-      border-color: var(--secondary);
-      color: #fff;
-    }
-
-    .step-text h4 { font-size: 1rem; }
-    .step-text p { font-size: 0.8rem; color: var(--text-muted); }
-
-    /* Bank Payment Details Box */
     .bank-box {
       background-color: #0E2310;
       border: 1px solid var(--secondary);
       border-radius: 8px;
       padding: 1.2rem;
       text-align: center;
-      display: none; /* Shown during dispatch/payment stage */
+      margin-top: 1.5rem;
+      display: none;
     }
 
     .bank-box h3 { color: #69F0AE; margin-bottom: 0.5rem; font-size: 1.1rem; }
-    .bank-detail { margin: 0.4rem 0; font-size: 0.95rem; }
   </style>
 </head>
 <body>
 
   <div class="track-container">
     <header>
-      <div class="logo">🌶️ Lagos<span>Bites</span></div>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">Live Delivery Status</p>
+      <a href="index.html" class="logo" style="text-decoration:none;">🌶️ Lagos<span>Bites</span></a>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Live Order Tracking</p>
     </header>
 
+    <!-- MANUAL ID ENTRY FORM -->
     <div class="card" id="searchBox">
       <h3 style="margin-bottom: 0.5rem;">Enter Your Order ID</h3>
-      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Paste the Order ID provided after placing your order.</p>
-      <input type="text" id="orderIdInput" placeholder="e.g. 40gHJ0OnKNpkgW0xXy2I" style="width:100%; padding: 0.8rem; background:#111; border:1px solid var(--border); color:#fff; border-radius:6px; margin-bottom:1rem; outline:none;" />
-      <button onclick="startTracking()" style="width:100%; padding:0.8rem; background:var(--primary); color:#fff; border:none; border-radius:6Got it. Please share the details or requirements for the next interface, and we'll get right to work on it.
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Paste your unique ID to view order status live.</p>
+      <input type="text" id="orderIdInput" placeholder="Paste Order ID here..." style="width:100%; padding: 0.8rem; background:#111; border:1px solid var(--border); color:#fff; border-radius:6px; margin-bottom:1rem; outline:none;" />
+      <button onclick="startTrackingManual()" style="width:100%; padding:0.8rem; background:var(--primary); color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer;">Track Status</button>
+    </div>
+
+    <!-- LIVE TRACKER DISPLAY CARD -->
+    <div class="card" id="trackerDisplay" style="display:none;">
+      <p style="font-size: 0.8rem; color: var(--text-muted);">ORDER ID: <span id="activeOrderId" style="color:#FFF;"></span></p>
+      <h3 id="mealNameDisplay" style="color: var(--primary); margin-top:0.3rem;">Fetching Meal...</h3>
+
+      <div class="tracker-steps">
+        <div class="step-item" id="step-pending">
+          <div class="step-icon">1</div>
+          <div class="step-text">
+            <h4>Order Received</h4>
+            <p>Your order has been sent to the kitchen.</p>
+          </div>
+        </div>
+
+        <div class="step-item" id="step-preparing">
+          <div class="step-icon">2</div>
+          <div class="step-text">
+            <h4>Preparing Meal</h4>
+            <p>Our chef is cooking your meal fresh.</p>
+          </div>
+        </div>
+
+        <div class="step-item" id="step-on_the_way">
+          <div class="step-icon">3</div>
+          <div class="step-text">
+            <h4>Out for Delivery</h4>
+            <p>Our dispatch rider is bringing your food.</p>
+          </div>
+        </div>
+
+        <div class="step-item" id="step-delivered">
+          <div class="step-icon">4</div>
+          <div class="step-text">
+            <h4>Delivered</h4>
+            <p>Meal handed over. Enjoy your food!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- BANK ACCOUNT DETAILS SHOWN ON DISPATCH -->
+      <div class="bank-box" id="bankBox">
+        <h3>💳 Make Payment on Delivery</h3>
+        <p style="font-size:0.85rem; color:#AAA; margin-bottom:0.8rem;">Transfer payment to the business bank account below upon delivery:</p>
+        <p>Bank: <strong>GTBank / Zenith Bank</strong></p>
+        <p>Account Name: <strong>Lagos Bites Enterprise</strong></p>
+        <p style="font-size:1.2rem; color:#69F0AE; font-weight:800; margin-top:0.4rem;">0123456789</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBKTNZeRJPEBDmr8zX1UtbFaN_qhx6lZCk",
+      authDomain: "lagos-af264.firebaseapp.com",
+      projectId: "lagos-af264",
+      storageBucket: "lagos-af264.firebasestorage.app",
+      messagingSenderId: "606835715980",
+      appId: "1:606835715980:web:429f5c884a9d90771ab0a9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let unsubscribe = null;
+
+    // Check if ID is passed in the URL (e.g. track.html?id=DOCUMENT_ID)
+    const urlParams = new URLSearchParams(window.location.search);
+    const idFromUrl = urlParams.get('id');
+
+    if (idFromUrl) {
+      document.getElementById('orderIdInput').value = idFromUrl;
+      listenToOrder(idFromUrl);
+    }
+
+    window.startTrackingManual = function() {
+      const inputId = document.getElementById('orderIdInput').value.trim();
+      if (inputId !== "") {
+        listenToOrder(inputId);
+      }
+    };
+
+    function listenToOrder(orderId) {
+      if (unsubscribe) unsubscribe();
+
+      document.getElementById('activeOrderId').innerText = orderId;
+      document.getElementById('trackerDisplay').style.display = 'block';
+
+      // Real-time listener on document
+      unsubscribe = onSnapshot(doc(db, "orders", orderId), (docSnap) => {
+        if (!docSnap.exists()) {
+          alert("Order ID not found! Please check and try again.");
+          return;
+        }
+
+        const data = docSnap.data();
+        document.getElementById('mealNameDisplay').innerText = data.meal || "Your Order";
+
+        const status = data.status || 'pending';
+        updateUI(status);
+      });
+    }
+
+    function updateUI(status) {
+      // Reset all steps
+      ['pending', 'preparing', 'on_the_way', 'delivered'].forEach(s => {
+        const el = document.getElementById(`step-${s}`);
+        el.classList.remove('active', 'completed');
+      });
+
+      const bankBox = document.getElementById('bankBox');
+
+      if (status === 'pending') {
+        document.getElementById('step-pending').classList.add('active');
+        bankBox.style.display = 'none';
+      } else if (status === 'preparing') {
+        document.getElementById('step-pending').classList.add('completed');
+        document.getElementById('step-preparing').classList.add('active');
+        bankBox.style.display = 'none';
+      } else if (status === 'on_the_way' || status === 'payment_received') {
+        document.getElementById('step-pending').classList.add('completed');
+        document.getElementById('step-preparing').classList.add('completed');
+        document.getElementById('step-on_the_way').classList.add('active');
+        bankBox.style.display = 'block'; // Show payment details
+      } else if (status === 'delivered') {
+        document.getElementById('step-pending').classList.add('completed');
+        document.getElementById('step-preparing').classList.add('completed');
+        document.getElementById('step-on_the_way').classList.add('completed');
+        document.getElementById('step-delivered').classList.add('completed', 'active');
+        bankBox.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
