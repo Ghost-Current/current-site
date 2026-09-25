@@ -12,25 +12,101 @@
   <style>
     :root {
       --primary: #E65100;
+      --secondary: #2E7D32;
       --dark: #121212;
       --card-bg: #1A1A1A;
       --text-main: #F5F5F5;
       --text-muted: #AAAAAA;
       --border: #2A2A2A;
-      --green: #4CAF50;
-      --blue: #2196F3;
-      --orange: #FF9800;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--dark); color: var(--text-main); padding: 1.5rem; }
+    body { background-color: var(--dark); color: var(--text-main); padding: 1.5rem 1rem; }
 
-    .track-container { max-It looks like we haven't started on a topic yet! What are you working on or hoping to dive into right now? 
+    .track-container { max-width: 500px; margin: 0 auto; }
 
-Here are a few ways we can jump in:
+    header { text-align: center; margin-bottom: 2rem; }
+    .logo { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
 
-* **Solve a problem:** Coding, math, writing, or refining a document.
-* **Learn something new:** Break down a complex topic, science concept, or historical event.
-* **Brainstorm & Plan:** Strategy, project ideas, itineraries, or workflows.
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
 
-Let me know what's on your mind!
+    /* Live Progress Tracker UI */
+    .tracker-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      position: relative;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0.3;
+      transition: all 0.3s ease;
+    }
+
+    .step-item.active { opacity: 1; }
+
+    .step-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #222;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .step-item.active .step-icon {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .step-item.completed .step-icon {
+      background-color: var(--secondary);
+      border-color: var(--secondary);
+      color: #fff;
+    }
+
+    .step-text h4 { font-size: 1rem; }
+    .step-text p { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Bank Payment Details Box */
+    .bank-box {
+      background-color: #0E2310;
+      border: 1px solid var(--secondary);
+      border-radius: 8px;
+      padding: 1.2rem;
+      text-align: center;
+      display: none; /* Shown during dispatch/payment stage */
+    }
+
+    .bank-box h3 { color: #69F0AE; margin-bottom: 0.5rem; font-size: 1.1rem; }
+    .bank-detail { margin: 0.4rem 0; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+
+  <div class="track-container">
+    <header>
+      <div class="logo">🌶️ Lagos<span>Bites</span></div>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Live Delivery Status</p>
+    </header>
+
+    <div class="card" id="searchBox">
+      <h3 style="margin-bottom: 0.5rem;">Enter Your Order ID</h3>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Paste the Order ID provided after placing your order.</p>
+      <input type="text" id="orderIdInput" placeholder="e.g. 40gHJ0OnKNpkgW0xXy2I" style="width:100%; padding: 0.8rem; background:#111; border:1px solid var(--border); color:#fff; border-radius:6px; margin-bottom:1rem; outline:none;" />
+      <button onclick="startTracking()" style="width:100%; padding:0.8rem; background:var(--primary); color:#fff; border:none; border-radius:6Got it. Please share the details or requirements for the next interface, and we'll get right to work on it.
