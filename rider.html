@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lagos Bites | Dispatch Rider Portal</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #E65100;
+      --dark: #121212;
+      --card-bg: #1A1A1A;
+      --text-main: #F5F5F5;
+      --text-muted: #AAAAAA;
+      --border: #2A2A2A;
+      --red-alert: #D32F2F;
+      --green-success: #2E7D32;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--dark); color: var(--text-main); padding: 1rem; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
+    .rider-badge { background-color: #222; color: #fff; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; border: 1px solid var(--border); }
+
+    .rider-container { max-width: 600px; margin: 0 auto; }
+    .delivery-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .customer-details h2 { font-size: 1.3rem; margin-bottom: 0.3rem; color: #fff; }
+    .phone-link {
+      display: inline-block;
+      color: #2196F3;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .address-box {
+      background-color: #111;
+      padding: 0.8rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 3px solid var(--primary);
+    }
+
+    /* Live Payment Alert Indicator */
+    .payment-banner {
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .payment-pending {
+      background-color: rgba(211, 47, 47, 0.2);
+      border: 2px solid var(--red-alert);
+      color: #FF5252;
+    }
+
+    .payment-confirmed {
+      background-color: rgba(46, 125, 50, 0.2);
+      border: 2px solid var(--green-success);
+      color: #69F0AE;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+
+    .btn-complete {
+      width: 100%;
+      padding: 1rem;
+      background-color: var(--green-success);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn-disabled {
+      background-color: #333;
+      color: #777;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">🛵 Dispatch <span>Portal</span></div>
+    <div class="rider-badge">ACTIVE RIDER</div>
+  </header>
+
+  <div class="rider-container">
+    <h3 style="margin-bottom: 1rem;">Assigned Deliveries</h3>
+    <div id="riderOrdersGrid">
+      <p style="color: var(--text-muted);">Fetching assigned deliveries...</p>
+    </div>
+  </div>
+
+  <!-- Firebase Modular SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // Your existing Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBKTNZeRJPEBDmr8zX1UtbFaN_qhx6lZCk",
+      authDomain: "lagos-af264.firebaseapp.com",
+      projectId: "lagos-af264",
+      storageBucket: "lagos-af264.firebasestorage.app",
+      messagingSenderId: "606835715980",
+      appId: "1:606835715980:web:429f5c884a9d90771ab0a9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const riderOrdersGrid = document.getElementById('riderOrdersGrid');
+
+    // Real-time listener filtering active deliveries for the rider
+    onSnapshot(collection(db, "orders"), (snapshot) => {
+      riderOrdersGrid.innerHTML = "";
+
+      let activeDeliveries = 0;
+
+      snapshot.forEach((docSnap) => {
+        const order = docSnap.data();
+        const orderId = docSnap.id;
+        const status = order.status || 'pending';
+
+        // Display only orders dispatched to rider or awaiting completion
+        if (status === 'on_the_way' || status === 'payment_received') {
+          activeDeliveries++;
+
+          const deliveryCard = document.createElement('div');
+          deliveryCard.className = 'delivery-card';
+
+          const isPaymentConfirmed = status === 'payment_received';
+
+          deliveryCard.innerHTML = `
+            <div class="customer-details">
+              <h2>${order.fullName || 'Customer'}</h2>
+              <a href="tel:${order.phone}" class="phone-link">📞 Call: ${order.phone || 'No phone'}</a>
+            </div>
+
+            <div class="address-box">
+              <p style="font-size: 0.8rem; color: var(--text-muted);">DELIVERY LOCATION</p>
+              <strong>${order.address || 'Address provided'}</strong>
+            </div>
+
+            <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+              Item: <strong>${order.meal}</strong>
+            </p>
+
+            <!-- LIVE PAYMENT STATUS BANNER -->
+            <div class="payment-banner ${isPaymentConfirmed ? 'payment-confirmed' : 'payment-pending'}">
+              ${isPaymentConfirmed ? '✅ PAYMENT RECEIVED! HAND OVER FOOD' : '🛑 DO NOT HAND OVER FOOD — WAITING FOR PAYMENT'}
+            </div>
+
+            <button 
+              class="btn-complete ${isPaymentConfirmed ? '' : 'btn-disabled'}" 
+              ${isPaymentConfirmed ? '' : 'disabled'}
+              onclick="markDelivered('${orderId}')"
+            >
+              ${isPaymentConfirmed ? 'Mark Order as Delivered' : 'Awaiting Payment Confirmation'}
+            </button>
+          `;
+
+          riderOrdersGrid.appendChild(deliveryCard);
+        }
+      });
+
+      if (activeDeliveries === 0) {
+        riderOrdersGrid.innerHTML = "<p style='color: var(--text-muted);'>No active deliveries assigned right now.</p>";
+      }
+    });
+
+    // Function for rider to complete the delivery flow
+    window.markDelivered = async function(orderId) {
+      try {
+        const orderRef = doc(db, "orders", orderId);
+        await updateDoc(orderRef, { status: 'delivered' });
+      } catch (error) {
+        console.error("Error marking delivered:", error);
+        alert("Failed to complete order. Check connection.");
+      }
+    };
+  </script>
+</body>
+</html>
