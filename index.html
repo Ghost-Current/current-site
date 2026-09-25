@@ -361,85 +361,58 @@
       display: none;
     }
 
-    /* ==========================================================================
-       7. LIVE TRACKER MODAL (INLINE POPUP)
-       ========================================================================== */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      padding: 1rem;
-    }
-
-    .modal-card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      max-width: 480px;
-      width: 100%;
-      padding: 2rem;
-      position: relative;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-    }
-
-    .close-modal {
-      position: absolute;
-      top: 1rem; right: 1.2rem;
-      font-size: 1.5rem;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-
-    .tracker-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin: 1.5rem 0;
-    }
-
-    .step-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      opacity: 0.3;
-      transition: all 0.3s ease;
-    }
-
-    .step-item.active { opacity: 1; }
-
-    .step-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background-color: #222;
-      border: 2px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 1rem;
-    }
-
-    .step-item.active .step-icon { background-color: var(--primary); border-color: var(--primary); color: #fff; }
-    .step-item.completed .step-icon { background-color: var(--secondary); border-color: var(--secondary); color: #fff; }
-
-    .bank-box {
+    /* ORDER SUCCESS MODAL UI */
+    .success-box {
       background-color: #0E2310;
       border: 1px solid var(--secondary);
       border-radius: 8px;
-      padding: 1rem;
+      padding: 1.5rem;
       text-align: center;
-      margin-top: 1rem;
+      margin-top: 1.5rem;
       display: none;
     }
 
+    .order-id-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background-color: #111;
+      border: 1px dashed var(--secondary);
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      margin: 1rem 0;
+      font-weight: 800;
+      color: #69F0AE;
+      font-size: 1.05rem;
+    }
+
+    .btn-copy {
+      background-color: var(--secondary);
+      color: #fff;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .btn-track {
+      display: inline-block;
+      width: 100%;
+      padding: 0.8rem;
+      background-color: var(--primary);
+      color: #fff;
+      text-align: center;
+      font-weight: 700;
+      border-radius: 6px;
+      margin-top: 0.5rem;
+      text-decoration: none;
+    }
+
     /* ==========================================================================
-       8. FOOTER & RESPONSIVE
+       7. FOOTER
        ========================================================================== */
     footer {
       background-color: #0A0A0A;
@@ -456,9 +429,26 @@
       margin-bottom: 2rem;
     }
 
-    .footer-col h4 { margin-bottom: 1rem; font-size: 1.1rem; color: var(--primary); }
-    .footer-col p, .footer-col a { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem; display: block; }
-    .footer-bottom { text-align: center; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; }
+    .footer-col h4 {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .footer-col p, .footer-col a {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
 
     @media (max-width: 768px) {
       .hamburger { display: flex; }
@@ -477,17 +467,13 @@
 </head>
 <body>
 
-  <!-- 1. HEADER & NAVIGATION -->
+  <!-- NAVIGATION -->
   <header>
     <div class="nav-container">
       <a href="#home" class="logo">🌶️ Lagos<span>Bites</span></a>
-      
       <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
-
       <ul class="nav-links" id="navLinks">
         <li><a href="#home" onclick="closeNav()">Home</a></li>
         <li><a href="#menu" onclick="closeNav()">Menu</a></li>
@@ -497,7 +483,7 @@
     </div>
   </header>
 
-  <!-- 2. HERO SECTION -->
+  <!-- HERO SECTION -->
   <section id="home" class="hero">
     <div class="hero-content">
       <h1>Hot, Fresh & Authentic <span>Lagos Flavors</span> Delivered Fast</h1>
@@ -509,7 +495,7 @@
     </div>
   </section>
 
-  <!-- 3. MENU PREVIEW SECTION -->
+  <!-- MENU PREVIEW SECTION -->
   <section id="menu" class="section-padding">
     <div class="section-header">
       <h2>Popular Lagos Dishes</h2>
@@ -517,9 +503,8 @@
     </div>
 
     <div class="menu-grid">
-      <!-- Card 1 -->
       <div class="food-card">
-        <img src="https://iili.io/nATzyW7.md.jpg" alt="Smokey Party Jollof with Peppered Chicken" />
+        <img src="https://iili.io/nATzyW7.md.jpg" alt="Smokey Party Jollof" />
         <div class="food-card-body">
           <div class="food-header">
             <h3 class="food-name">Smokey Party Jollof</h3>
@@ -530,9 +515,8 @@
         </div>
       </div>
 
-      <!-- Card 2 -->
       <div class="food-card">
-        <img src="https://iili.io/nATzsls.jpg" alt="Spicy Beef Suya Platter" />
+        <img src="https://iili.io/nATzsls.jpg" alt="Beef Suya" />
         <div class="food-card-body">
           <div class="food-header">
             <h3 class="food-name">Beef Suya Platter</h3>
@@ -543,9 +527,8 @@
         </div>
       </div>
 
-      <!-- Card 3 -->
       <div class="food-card">
-        <img src="https://iili.io/nATzZJf.md.jpg" alt="Ewa Aganyin and Bread" />
+        <img src="https://iili.io/nATzZJf.md.jpg" alt="Ewa Aganyin" />
         <div class="food-card-body">
           <div class="food-header">
             <h3 class="food-name">Ewa Aganyin & Bread</h3>
@@ -556,9 +539,8 @@
         </div>
       </div>
 
-      <!-- Card 4 -->
       <div class="food-card">
-        <img src="https://iili.io/nATzpxS.md.jpg" alt="Ofada Rice Special with Ayamase Stew" />
+        <img src="https://iili.io/nATzpxS.md.jpg" alt="Ofada Rice" />
         <div class="food-card-body">
           <div class="food-header">
             <h3 class="food-name">Ofada Rice Special</h3>
@@ -571,7 +553,7 @@
     </div>
   </section>
 
-  <!-- 4. HOW IT WORKS SECTION -->
+  <!-- HOW IT WORKS SECTION -->
   <div class="how-it-works-bg">
     <section id="how-it-works" class="section-padding">
       <div class="section-header">
@@ -601,11 +583,11 @@
     </section>
   </div>
 
-  <!-- 5. CONTACT / ORDER FORM SECTION -->
+  <!-- ORDER FORM SECTION -->
   <section id="contact" class="section-padding">
     <div class="section-header">
       <h2>Place Your Pre-Order</h2>
-      <p>Have a special request or catering order? Send us a message.</p>
+      <p>Fill in details below to dispatch your order.</p>
     </div>
 
     <form class="contact-form" id="orderForm">
@@ -625,10 +607,10 @@
         <label for="selectedMeal">Select Meal</label>
         <select id="selectedMeal">
           <option value="">-- Choose a dish --</option>
-          <option value="Smokey Party Jollof (₦3,500)">Smokey Party Jollof (₦3,500)</option>
-          <option value="Beef Suya Platter (₦4,000)">Beef Suya Platter (₦4,000)</option>
-          <option value="Ewa Aganyin & Bread (₦2,800)">Ewa Aganyin & Bread (₦2,800)</option>
-          <option value="Ofada Rice Special (₦4,500)">Ofada Rice Special (₦4,500)</option>
+          <option value="Smokey Party Jollof">Smokey Party Jollof (₦3,500)</option>
+          <option value="Beef Suya Platter">Beef Suya Platter (₦4,000)</option>
+          <option value="Ewa Aganyin & Bread">Ewa Aganyin & Bread (₦2,800)</option>
+          <option value="Ofada Rice Special">Ofada Rice Special (₦4,500)</option>
         </select>
         <div class="error-text" id="mealError">Please select a meal.</div>
       </div>
@@ -640,62 +622,23 @@
       </div>
 
       <button type="submit" class="btn" style="width: 100%;">Submit Order</button>
+
+      <!-- SUCCESS BOX DISPLAYING UNIQUE ORDER ID & DIRECT TRACK LINK -->
+      <div class="success-box" id="formSuccess">
+        <h3 style="color: #69F0AE;">🎉 Order Placed Successfully!</h3>
+        <p style="font-size: 0.85rem; color: #AAA; margin-top: 0.4rem;">Save your Unique Order ID to track your order live:</p>
+        
+        <div class="order-id-badge">
+          <span id="displayOrderId">...</span>
+          <button type="button" class="btn-copy" id="copyBtn" onclick="copyOrderId()">Copy</button>
+        </div>
+
+        <a id="trackOrderLink" href="#" class="btn-track">🛵 Track Your Order Live</a>
+      </div>
     </form>
   </section>
 
-  <!-- 6. LIVE ORDER TRACKER MODAL POPUP -->
-  <div class="modal-overlay" id="trackerModal">
-    <div class="modal-card">
-      <span class="close-modal" onclick="closeTrackerModal()">&times;</span>
-      <h3 style="margin-bottom:0.3rem;">🌶️ Live Order Status</h3>
-      <p style="font-size:0.8rem; color:var(--text-muted);" id="modalOrderIdDisplay">Order ID: Fetching...</p>
-
-      <div class="tracker-steps">
-        <div class="step-item" id="step1">
-          <div class="step-icon">1</div>
-          <div>
-            <h4>Order Received</h4>
-            <p>Sent to Lagos Bites kitchen</p>
-          </div>
-        </div>
-
-        <div class="step-item" id="step2">
-          <div class="step-icon">2</div>
-          <div>
-            <h4>Preparing Food</h4>
-            <p>Chefs are cooking your meal</p>
-          </div>
-        </div>
-
-        <div class="step-item" id="step3">
-          <div class="step-icon">3</div>
-          <div>
-            <h4>On Its Way</h4>
-            <p>Dispatch rider is en route</p>
-          </div>
-        </div>
-
-        <div class="step-item" id="step4">
-          <div class="step-icon">4</div>
-          <div>
-            <h4>Order Delivered</h4>
-            <p>Enjoy your meal!</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- BANK PAYMENT BOX -->
-      <div class="bank-box" id="bankBox">
-        <h4 style="color:#69F0AE; margin-bottom:0.4rem;">💳 Payment Details on Delivery</h4>
-        <p style="font-size:0.85rem;">Bank: <strong>GTBank / Kuda</strong></p>
-        <p style="font-size:0.85rem;">Account: <strong>0123456789</strong></p>
-        <p style="font-size:0.85rem;">Name: <strong>Lagos Bites NG</strong></p>
-        <p style="font-size:0.75rem; color:#aaa; margin-top:0.4rem;">Transfer to rider or store account upon arrival.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 7. FOOTER -->
+  <!-- FOOTER -->
   <footer>
     <div class="footer-container">
       <div class="footer-col">
@@ -723,12 +666,11 @@
     </div>
   </footer>
 
-  <!-- 8. FIREBASE & APPLICATION JAVASCRIPT -->
+  <!-- JAVASCRIPT & FIREBASE FIRESTORE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyBKTNZeRJPEBDmr8zX1UtbFaN_qhx6lZCk",
       authDomain: "lagos-af264.firebaseapp.com",
@@ -741,7 +683,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Mobile Navigation
+    // Navigation Toggle
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const navLinks = document.getElementById('navLinks');
 
@@ -750,14 +692,21 @@
     }
 
     window.closeNav = function() {
-      if (navLinks) navLinks.classList.remove('active');
+      if (navLinks) { navLinks.classList.remove('active'); }
     };
 
-    let unsubscribeTracker = null;
+    // Copy Order ID logic
+    window.copyOrderId = function() {
+      const orderIdText = document.getElementById('displayOrderId').innerText;
+      navigator.clipboard.writeText(orderIdText);
+      const copyBtn = document.getElementById('copyBtn');
+      copyBtn.innerText = "Copied!";
+      setTimeout(() => { copyBtn.innerText = "Copy"; }, 3000);
+    };
 
-    // Order Submission with Automatic Tracking
+    // Submit Order Form
     const orderForm = document.getElementById('orderForm');
-
+    
     if (orderForm) {
       orderForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -785,10 +734,10 @@
 
         const submitBtn = orderForm.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
-        submitBtn.innerText = "Sending Order...";
+        submitBtn.innerText = "Processing Order...";
 
         try {
-          // Add Order to Firestore with initial "pending" status
+          // Write document into "orders" collection
           const docRef = await addDoc(collection(db, "orders"), {
             fullName: name,
             phone: phone,
@@ -798,69 +747,25 @@
             createdAt: serverTimestamp()
           });
 
-          orderForm.reset();
+          // Display unique document ID on screen
+          document.getElementById('displayOrderId').innerText = docRef.id;
+          
+          // Set tracking redirect URL with query parameter
+          const trackLink = document.getElementById('trackOrderLink');
+          trackLink.href = `track.html?id=${docRef.id}`;
 
-          // Launch Live Tracker Modal directly on page
-          openTrackerModal(docRef.id);
+          // Show success box
+          document.getElementById('formSuccess').style.display = 'block';
+          submitBtn.style.display = 'none'; // Hide submit button to prevent double submissions
 
         } catch (error) {
-          console.error("Order submission error: ", error);
-          alert("Could not process order. Please try again.");
-        } finally {
+          console.error("Error creating order: ", error);
+          alert("Error placing order. Please try again.");
           submitBtn.disabled = false;
           submitBtn.innerText = "Submit Order";
         }
       });
     }
-
-    // Function to listen to order status changes live
-    function openTrackerModal(orderId) {
-      document.getElementById('trackerModal').style.display = 'flex';
-      document.getElementById('modalOrderIdDisplay').innerText = `Order ID: ${orderId}`;
-
-      if (unsubscribeTracker) unsubscribeTracker();
-
-      unsubscribeTracker = onSnapshot(doc(db, "orders", orderId), (docSnap) => {
-        if (!docSnap.exists()) return;
-
-        const status = docSnap.data().status || 'pending';
-        updateTrackerUI(status);
-      });
-    }
-
-    function updateTrackerUI(status) {
-      const s1 = document.getElementById('step1');
-      const s2 = document.getElementById('step2');
-      const s3 = document.getElementById('step3');
-      const s4 = document.getElementById('step4');
-      const bankBox = document.getElementById('bankBox');
-
-      // Reset
-      [s1, s2, s3, s4].forEach(s => s.className = 'step-item');
-      bankBox.style.display = 'none';
-
-      if (status === 'pending') {
-        s1.className = 'step-item active';
-      } else if (status === 'preparing') {
-        s1.className = 'step-item completed';
-        s2.className = 'step-item active';
-      } else if (status === 'on_the_way') {
-        s1.className = 'step-item completed';
-        s2.className = 'step-item completed';
-        s3.className = 'step-item active';
-        bankBox.style.display = 'block'; // Show bank details for payment on delivery
-      } else if (status === 'payment_received' || status === 'delivered') {
-        s1.className = 'step-item completed';
-        s2.className = 'step-item completed';
-        s3.className = 'step-item completed';
-        s4.className = 'step-item active completed';
-        bankBox.style.display = 'block';
-      }
-    }
-
-    window.closeTrackerModal = function() {
-      document.getElementById('trackerModal').style.display = 'none';
-    };
   </script>
 </body>
 </html>
