@@ -44,20 +44,9 @@
       overflow-x: hidden;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; height: auto; display: block; }
 
     /* ==========================================================================
        2. HEADER & NAVIGATION
@@ -91,13 +80,11 @@
       gap: 0.4rem;
     }
 
-    .logo span {
-      color: var(--text-main);
-    }
+    .logo span { color: var(--text-main); }
 
     .nav-links {
       display: flex;
-      gap: 1.8rem;
+      gap: 1.5rem;
       align-items: center;
     }
 
@@ -107,11 +94,8 @@
       transition: var(--transition);
     }
 
-    .nav-links a:hover {
-      color: var(--primary);
-    }
+    .nav-links a:hover { color: var(--primary); }
 
-    /* Track Order Nav Highlight Button */
     .nav-track-btn {
       background-color: rgba(230, 81, 0, 0.15);
       color: var(--primary) !important;
@@ -125,6 +109,49 @@
       background-color: var(--primary);
       color: #fff !important;
     }
+
+    /* GOOGLE AUTH BUTTON & USER PROFILE UI */
+    .btn-google {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: #4285F4;
+      color: #FFF !important;
+      padding: 0.45rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-google:hover { opacity: 0.9; }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .btn-logout:hover { color: #FF5252; border-color: #FF5252; }
 
     .hamburger {
       display: none;
@@ -164,9 +191,7 @@
       margin-bottom: 1.2rem;
     }
 
-    .hero-content h1 span {
-      color: var(--primary);
-    }
+    .hero-content h1 span { color: var(--primary); }
 
     .hero-content p {
       font-size: 1.15rem;
@@ -191,10 +216,6 @@
     .btn:hover {
       background-color: var(--primary-hover);
       transform: translateY(-2px);
-    }
-
-    .hero-image {
-      position: relative;
     }
 
     .hero-image img {
@@ -225,9 +246,7 @@
       margin-bottom: 0.5rem;
     }
 
-    .section-header p {
-      color: var(--text-muted);
-    }
+    .section-header p { color: var(--text-muted); }
 
     .menu-grid {
       display: grid;
@@ -270,16 +289,8 @@
       margin-bottom: 0.5rem;
     }
 
-    .food-name {
-      font-size: 1.25rem;
-      font-weight: 700;
-    }
-
-    .food-price {
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 1.1rem;
-    }
+    .food-name { font-size: 1.25rem; font-weight: 700; }
+    .food-price { color: var(--primary); font-weight: 800; font-size: 1.1rem; }
 
     .food-desc {
       color: var(--text-muted);
@@ -289,7 +300,42 @@
     }
 
     /* ==========================================================================
-       5. HOW IT WORKS SECTION
+       5. USER ORDERS SECTION (AUTHENTICATED ONLY)
+       ========================================================================== */
+    .my-orders-container {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+      margin-bottom: 3rem;
+      display: none; /* Shown when user is logged in */
+    }
+
+    .order-item-card {
+      background-color: #111;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .order-status-pill {
+      background-color: rgba(230, 81, 0, 0.2);
+      color: var(--primary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+
+    /* ==========================================================================
+       6. HOW IT WORKS SECTION
        ========================================================================== */
     .how-it-works-bg {
       background-color: #161616;
@@ -311,24 +357,12 @@
       border-radius: 12px;
     }
 
-    .step-icon {
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
-      display: inline-block;
-    }
-
-    .step-card h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .step-card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
+    .step-icon { font-size: 2.8rem; margin-bottom: 1rem; display: inline-block; }
+    .step-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+    .step-card p { color: var(--text-muted); font-size: 0.95rem; }
 
     /* ==========================================================================
-       6. CONTACT & ORDER FORM SECTION
+       7. CONTACT & ORDER FORM SECTION
        ========================================================================== */
     .contact-form {
       max-width: 600px;
@@ -339,9 +373,7 @@
       border: 1px solid var(--border);
     }
 
-    .form-group {
-      margin-bottom: 1.2rem;
-    }
+    .form-group { margin-bottom: 1.2rem; }
 
     .form-group label {
       display: block;
@@ -365,9 +397,7 @@
 
     .form-group input:focus,
     .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: var(--primary);
-    }
+    .form-group select:focus { border-color: var(--primary); }
 
     .error-text {
       color: #FF5252;
@@ -426,15 +456,10 @@
       text-decoration: none;
     }
 
-    /* ==========================================================================
-       TRACK ORDER MODAL POPUP
-       ========================================================================== */
+    /* TRACK ORDER POPUP MODAL */
     .modal-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(5px);
       display: none;
@@ -455,16 +480,13 @@
 
     .close-modal {
       position: absolute;
-      top: 15px;
-      right: 20px;
+      top: 15px; right: 20px;
       font-size: 1.5rem;
       color: var(--text-muted);
       cursor: pointer;
     }
 
-    /* ==========================================================================
-       7. FOOTER
-       ========================================================================== */
+    /* FOOTER */
     footer {
       background-color: #0A0A0A;
       border-top: 1px solid var(--border);
@@ -480,18 +502,8 @@
       margin-bottom: 2rem;
     }
 
-    .footer-col h4 {
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
-      color: var(--primary);
-    }
-
-    .footer-col p, .footer-col a {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-      display: block;
-    }
+    .footer-col h4 { margin-bottom: 1rem; font-size: 1.1rem; color: var(--primary); }
+    .footer-col p, .footer-col a { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem; display: block; }
 
     .footer-bottom {
       text-align: center;
@@ -530,8 +542,20 @@
         <li><a href="#menu" onclick="closeNav()">Menu</a></li>
         <li><a href="#how-it-works" onclick="closeNav()">How It Works</a></li>
         <li><a href="#contact" onclick="closeNav()">Contact</a></li>
-        <!-- NEW TRACK ORDER TAB -->
         <li><a href="javascript:void(0)" class="nav-track-btn" onclick="openTrackModal()">🛵 Track Order</a></li>
+        
+        <!-- AUTHENTICATION STATE UI -->
+        <li id="authContainer">
+          <button class="btn-google" id="googleSignInBtn" onclick="loginWithGoogle()">
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#FFF" d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.545,6.477,2.545,12s4.476,10,10,10c5.765,0,9.756-4.056,9.756-9.921c0-0.782-0.082-1.34-0.18-1.84H12.545z"/></svg>
+            Sign in
+          </button>
+          
+          <div class="user-profile" id="userProfile" style="display: none;">
+            <img id="userAvatarImg" class="user-avatar" src="" alt="User Profile" />
+            <button class="btn-logout" onclick="logoutUser()">Logout</button>
+          </div>
+        </li>
       </ul>
     </div>
   </header>
@@ -553,6 +577,13 @@
     <div class="section-header">
       <h2>Popular Lagos Dishes</h2>
       <p>Handcrafted delicacies prepared by top local chefs</p>
+    </div>
+
+    <!-- SIGNED-IN USER'S ACTIVE ORDERS CARD -->
+    <div class="my-orders-container" id="myOrdersSection">
+      <h3 style="color: var(--primary); margin-bottom: 0.3rem;">📋 Your Recent Orders</h3>
+      <p style="font-size:0.85rem; color:var(--text-muted);">Quickly jump to track any active order in real time.</p>
+      <div id="ordersList"></div>
     </div>
 
     <div class="menu-grid">
@@ -738,10 +769,11 @@
     </div>
   </footer>
 
-  <!-- JAVASCRIPT & FIREBASE FIRESTORE -->
+  <!-- JAVASCRIPT & FIREBASE FIRESTORE + AUTHENTICATION -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBKTNZeRJPEBDmr8zX1UtbFaN_qhx6lZCk",
@@ -754,6 +786,93 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    let currentUser = null;
+    let ordersUnsubscribe = null;
+
+    // Monitor Auth State Changes
+    onAuthStateChanged(auth, (user) => {
+      currentUser = user;
+      const googleBtn = document.getElementById('googleSignInBtn');
+      const userProfile = document.getElementById('userProfile');
+      const userAvatarImg = document.getElementById('userAvatarImg');
+      const myOrdersSection = document.getElementById('myOrdersSection');
+
+      if (user) {
+        // User is signed in
+        googleBtn.style.display = 'none';
+        userProfile.style.display = 'flex';
+        userAvatarImg.src = user.photoURL || 'https://via.placeholder.com/32';
+
+        // Auto-fill full name if available
+        const nameField = document.getElementById('fullName');
+        if (nameField && user.displayName) {
+          nameField.value = user.displayName;
+        }
+
+        // Fetch User's Orders
+        fetchUserOrders(user.uid);
+      } else {
+        // User is logged out
+        googleBtn.style.display = 'flex';
+        userProfile.style.display = 'none';
+        myOrdersSection.style.display = 'none';
+        if (ordersUnsubscribe) ordersUnsubscribe();
+      }
+    });
+
+    // Google Login & Logout Functions
+    window.loginWithGoogle = async function() {
+      try {
+        await signInWithPopup(auth, googleProvider);
+      } catch (err) {
+        console.error("Google Auth Error:", err);
+        alert("Could not sign in with Google. Please try again.");
+      }
+    };
+
+    window.logoutUser = async function() {
+      await signOut(auth);
+    };
+
+    // Fetch Logged-in User's Orders
+    function fetchUserOrders(userId) {
+      const q = query(collection(db, "orders"), where("userId", "==", userId));
+      
+      ordersUnsubscribe = onSnapshot(q, (snapshot) => {
+        const myOrdersSection = document.getElementById('myOrdersSection');
+        const ordersList = document.getElementById('ordersList');
+        
+        if (snapshot.empty) {
+          myOrdersSection.style.display = 'none';
+          return;
+        }
+
+        myOrdersSection.style.display = 'block';
+        ordersList.innerHTML = '';
+
+        snapshot.forEach((docSnap) => {
+          const item = docSnap.data();
+          const orderId = docSnap.id;
+
+          const card = document.createElement('div');
+          card.className = 'order-item-card';
+          card.innerHTML = `
+            <div>
+              <strong>${item.meal || 'Order'}</strong>
+              <div style="font-size:0.75rem; color:#888;">ID: ${orderId}</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.8rem;">
+              <span class="order-status-pill">${item.status || 'pending'}</span>
+              <a href="track.html?id=${orderId}" class="btn" style="padding:0.4rem 0.8rem; font-size:0.8rem;">Track</a>
+            </div>
+          `;
+          ordersList.appendChild(card);
+        });
+      });
+    }
 
     // Navigation Toggle
     const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -828,26 +947,25 @@
         submitBtn.innerText = "Processing Order...";
 
         try {
-          // Write document into "orders" collection
-          const docRef = await addDoc(collection(db, "orders"), {
+          const newOrder = {
             fullName: name,
             phone: phone,
             meal: meal,
             address: address,
             status: "pending",
-            createdAt: serverTimestamp()
-          });
+            createdAt: serverTimestamp(),
+            userId: currentUser ? currentUser.uid : null
+          };
 
-          // Display unique document ID on screen
+          const docRef = await addDoc(collection(db, "orders"), newOrder);
+
           document.getElementById('displayOrderId').innerText = docRef.id;
           
-          // Set tracking redirect URL with query parameter
           const trackLink = document.getElementById('trackOrderLink');
           trackLink.href = `track.html?id=${docRef.id}`;
 
-          // Show success box
           document.getElementById('formSuccess').style.display = 'block';
-          submitBtn.style.display = 'none'; // Hide submit button to prevent double submissions
+          submitBtn.style.display = 'none';
 
         } catch (error) {
           console.error("Error creating order: ", error);
